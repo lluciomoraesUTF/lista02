@@ -1,7 +1,24 @@
 import PrintStrategy from './PrintStrategy.js'
 
 export default class PrintHtmlStrategy extends PrintStrategy{
-     print(){
+
+    getCidadesArray(cidades){
+        const cidadesArray = [];
+
+        cidades.forEach(estado => {
+            const estadoCidades = estado.cidades;
+            estadoCidades.forEach(cidade => {
+                cidadesArray.push(cidade);
+            })
+        });
+
+        return cidadesArray;
+    }
+
+     print(cidades){
+
+        const cidadesArray = this.getCidadesArray(cidades);
+
         let result = `
         <!DOCTYPE HTML>
         <html>
@@ -14,8 +31,8 @@ export default class PrintHtmlStrategy extends PrintStrategy{
             <ul>
         `;
 
-            for (let i = 0; i < this.cidades.length; i++) {
-            result += '     <li>' + this.cidades[i]['Nome'] + '</li>\n';
+            for (let i = 0; i < cidadesArray.length; i++) {
+            result += '     <li>' + cidadesArray[i]['Nome'] + '</li>\n';
             }
 
             result += `

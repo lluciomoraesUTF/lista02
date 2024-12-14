@@ -29,19 +29,14 @@ export default class CityFactory {
         estados[cidade.Estado] = new Estado(cidade.Estado);  
       }
 
-      const cidade = new Cidade(cidade.ID, cidade.Nome, cidade.Estado);
-      estados[cidade.Estado].adicionar(cidade);
+      const cidadeObject = new Cidade(cidade.ID, cidade.Nome, cidade.Estado);
+      estados[cidade.Estado].adicionar(cidadeObject);
     });
 
     return Object.values(estados);
   }
 
   criarRelatorio(jsonData, formato) {
-    const estados = this.criarHierarquia(jsonData);
-
-    // console.log(`estados`)
-    // console.log(estados)
-
     let estrategia;
     if (formato === 'html') {
       estrategia = new PrintHtmlStrategy();
@@ -50,8 +45,10 @@ export default class CityFactory {
     } else {
       throw new Error('Formato de relatório inválido');
     }
-
     const relatorio = new CityPrinter(estrategia);
+
+    const estados = this.criarHierarquia(jsonData);
+    
     return relatorio.print(estados);
   }
 }

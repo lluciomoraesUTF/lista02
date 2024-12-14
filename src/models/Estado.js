@@ -1,4 +1,4 @@
-class Estados {
+class Estado {
   constructor(id) {
     this.id = id;
     this.cidades = [];
@@ -17,4 +17,4 @@ class Estados {
   }
 }
 
-export default Estados;
+export default Estado;

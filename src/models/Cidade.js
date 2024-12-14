@@ -1,9 +1,9 @@
-class Cidades {
-  constructor(id, nome, estadoId) {
-    this.id = id;
-    this.nome = nome;
-    this.estadoId = estadoId;  
+class Cidade {
+  constructor(ID, Nome, Estado) {
+    this.ID = ID;
+    this.Nome = Nome;
+    this.Estado = Estado;  
   }
 }
 
-export default Cidades;
+export default Cidade;
