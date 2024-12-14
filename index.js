@@ -4,5 +4,6 @@ const caminho = './data/cidades-2.json';
 
 
 
-const relatorioHtml = CityFactory.reportar(caminho, format);
+const cityFactory = new CityFactory();
+const relatorioHtml = cityFactory.reportar(caminho, format);
 console.log(relatorioHtml);

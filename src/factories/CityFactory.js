@@ -1,44 +1,46 @@
 import * as fs from 'node:fs';
-import Cidades from '../models/Cidades.js';
-import Estados from '../models/Estados.js';
+import Cidade from '../models/Cidade.js';
+import Estado from '../models/Estado.js';
 import CityPrinter from '../contexts/CityPrinter.js';
 import PrintHtmlStrategy from '../strategies/PrintHtmlStrategy.js';
 import PrintTxtStrategy from '../strategies/PrintTxtStrategy.js';
 
 export default class CityFactory {
 
-  static ler (caminho) {
+  ler (caminho) {
     return fs.readFileSync(caminho);
   }
 
-  static parse (cidades) {
+  parse (cidades) {
     return JSON.parse(cidades);
   }
 
-  static reportar(caminho, formato){
+  reportar(caminho, formato){
     const cidades = this.ler(caminho);
     const jsonData = this.parse(cidades);
-    this.criarHierarquia(jsonData);
     return this.criarRelatorio(jsonData, formato);
   }
 
-  static criarHierarquia(jsonData) {
+  criarHierarquia(jsonData) {
     const estados = {};
 
-    jsonData.forEach(({ ID, Nome, Estado }) => {
-      if (!estados[Estado]) {
-        estados[Estado] = new Estados(Estado);  
+    jsonData.forEach((cidade) => {
+      if (!estados[cidade.Estado]) {
+        estados[cidade.Estado] = new Estado(cidade.Estado);  
       }
 
-      const cidade = new Cidades(ID, Nome, Estado);
-      estados[Estado].adicionar(cidade);
+      const cidade = new Cidade(cidade.ID, cidade.Nome, cidade.Estado);
+      estados[cidade.Estado].adicionar(cidade);
     });
 
     return Object.values(estados);
   }
 
-  static criarRelatorio(jsonData, formato) {
+  criarRelatorio(jsonData, formato) {
     const estados = this.criarHierarquia(jsonData);
+
+    // console.log(`estados`)
+    // console.log(estados)
 
     let estrategia;
     if (formato === 'html') {
